@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}Meeting Created{% endblock %}
+
+{% block content %}
+<div class="max-w-md mx-auto bg-white shadow-md rounded-lg p-6 text-center">
+    <h2 class="text-2xl font-bold text-green-600 mb-4">Success!</h2>
+    <p class="text-gray-700">Your meeting has been successfully created.</p>
+    <a href="{% url 'meeting_list' %}" class="inline-block mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">View All Meetings</a>
+</div>
+{% endblock %}

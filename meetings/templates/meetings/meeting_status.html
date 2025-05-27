@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+  <div class="container text-center mt-5">
+    <h2>{{ message }}</h2>
+    <p>Redirecting to all meetings...</p>
+  </div>
+
+  <script>
+    setTimeout(function () {
+      window.location.href = "{% url 'all_meetings' %}";
+    }, 3000);  // Redirect after 3 seconds
+  </script>
+{% endblock %}
