@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5 space-y-8">
+
+  <!-- Welcome Header -->
+  <div class="bg-white shadow rounded-lg p-6">
+    <h2 class="text-2xl font-semibold text-gray-800">Welcome, {{ full_name }}!</h2>
+    <p class="text-sm text-gray-600 mt-1">{{ position }}</p>
+    <div class="mt-4">
+      {% if request.session.credentials %}
+        <p class="text-green-600 font-medium">✅ Google Calendar is connected.</p>
+      {% else %}
+        <a href="{% url 'authorize_google' %}" class="inline-block bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded">
+          Connect to Google Calendar
+        </a>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- On-going Meetings -->
+  <div class="bg-white shadow rounded-lg p-6">
+    <h3 class="text-xl font-semibold text-yellow-700 mb-4">On-going Meetings</h3>
+    {% if ongoing_meetings %}
+      {% for meeting in ongoing_meetings %}
+        <div class="mb-4 border-l-4 border-yellow-500 p-4 bg-yellow-50 rounded">
+          <p><strong>Title:</strong> {{ meeting.title }}</p>
+          <p><strong>Date:</strong> {{ meeting.date }}</p>
+          <p><strong>Time:</strong> {{ meeting.time }}</p>
+          <p><strong>Venue:</strong> {{ meeting.venue }}</p>
+          <p><strong>Description:</strong> {{ meeting.description }}</p>
+          <p><strong>Agenda:</strong> {{ meeting.agenda }}</p>
+
+          {% if not is_admin %}
+            <div class="mt-2">
+              {% if meeting.id in attended_meetings %}
+                <button class="bg-gray-400 text-white px-4 py-2 rounded" disabled>Attended</button>
+              {% else %}
+                <form method="post" action="{% url 'mark_attendance' meeting.id %}">
+                  {% csrf_token %}
+                  <button type="submit" class="bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded">
+                    Attend
+                  </button>
+                </form>
+              {% endif %}
+            </div>
+          {% endif %}
+
+          {% if is_admin %}
+            <form method="post" action="{% url 'end_meeting' meeting.id %}" class="mt-3">
+              {% csrf_token %}
+              <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded">
+                End Meeting
+              </button>
+            </form>
+          {% endif %}
+        </div>
+      {% endfor %}
+    {% else %}
+      <p class="text-gray-600">No on-going meetings.</p>
+    {% endif %}
+  </div>
+
+  <!-- Upcoming Meetings -->
+  <div class="bg-white shadow rounded-lg p-6">
+    <h3 class="text-xl font-semibold text-blue-700 mb-4">Upcoming Meetings</h3>
+    {% if upcoming_meetings %}
+      {% for meeting in upcoming_meetings %}
+        <div class="mb-4 border-l-4 border-blue-500 p-4 bg-blue-50 rounded">
+          <p><strong>Title:</strong> {{ meeting.title }}</p>
+          <p><strong>Date:</strong> {{ meeting.date }}</p>
+          <p><strong>Time:</strong> {{ meeting.time }}</p>
+          <p><strong>Venue:</strong> {{ meeting.venue }}</p>
+          <p><strong>Description:</strong> {{ meeting.description }}</p>
+          <p><strong>Agenda:</strong> {{ meeting.agenda }}</p>
+          {% if not is_admin %}
+            <div class="mt-2">
+              {% if meeting.id in attended_meetings %}
+                <button class="bg-gray-400 text-white px-4 py-2 rounded" disabled>Attended</button>
+              {% else %}
+                <form method="post" action="{% url 'mark_attendance' meeting.id %}">
+                  {% csrf_token %}
+                  <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
+                    Attend
+                  </button>
+                </form>
+              {% endif %}
+            </div>
+          {% endif %}
+        </div>
+      {% endfor %}
+    {% else %}
+      <p class="text-gray-600">No upcoming meetings.</p>
+    {% endif %}
+  </div>
+
+</div>
+{% endblock %}

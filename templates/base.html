@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Attendance System{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col">
+    <header class="bg-blue-700 text-white py-4 shadow">
+        <div class="container mx-auto flex justify-between items-center px-4">
+            <h1 class="text-xl font-bold">Villafranca Attendance System</h1>
+            <nav>
+                <ul class="flex space-x-4">
+                    {% if user.is_authenticated %}
+                        <li><a href="{% url 'dashboard' %}" class="hover:underline">Dashboard</a></li>
+                        {% if user.is_superuser %}
+                            <li><a href="{% url 'all_meetings' %}" class="hover:underline">All Meetings</a></li>
+                            <li><a href="{% url 'create_meeting' %}" class="hover:underline">Create Meeting</a></li>
+                        {% endif %}
+                        <li><a href="{% url 'logout' %}" class="hover:underline">Logout</a></li>
+                    {% else %}
+                        <li><a href="{% url 'login' %}" class="hover:underline">Login</a></li>
+                        <li><a href="{% url 'register' %}" class="hover:underline">Register</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="flex-1 container mx-auto px-4 py-8">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="bg-gray-200 text-center text-sm py-4">
+        &copy; {{ year|default:2025 }} Villafranca Attendance System. All rights reserved.
+    </footer>
+</body>
+</html>
