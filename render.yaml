@@ -2,7 +2,7 @@ services:
   - type: web
     name: attendance-app
     env: python
-    buildCommand: buildCommand: "echo 'from django.contrib.auth import get_user_model; get_user_model().objects.create_superuser(\"Akira\", \"zerokaido15@gmail.com\", \"MyPassword\")' | python manage.py shell"
+    buildCommand: "echo 'from django.contrib.auth import get_user_model; get_user_model().objects.create_superuser(\"Akira\", \"zerokaido15@gmail.com\", \"MyPassword\")' | python manage.py shell"
 
     startCommand: "gunicorn attendance_system.wsgi:application"
     envVars:
