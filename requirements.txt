@@ -4,6 +4,7 @@ certifi==2025.1.31
 charset-normalizer==3.4.1
 distlib==0.3.9
 Django==5.2
+dj-database-url
 filelock==3.18.0
 google-api-core==2.24.2
 google-api-python-client==2.169.0
@@ -11,6 +12,7 @@ google-auth==2.39.0
 google-auth-httplib2==0.2.0
 google-auth-oauthlib==1.2.2
 googleapis-common-protos==1.70.0
+gunicorn
 httplib2==0.22.0
 idna==3.10
 oauthlib==3.2.2
