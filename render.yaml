@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: attendance-app
+    env: python
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "gunicorn attendance_system.wsgi:application"
+    envVars:
+      - key: SECRET_KEY
+        fromEnvVar: SECRET_KEY
+      - key: DEBUG
+        value: false
+      - key: ALLOWED_HOSTS
+        value: attendance-app.onrender.com
+      - key: DATABASE_URL
+        fromEnvVar: DATABASE_URL
