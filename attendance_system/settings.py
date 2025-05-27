@@ -23,9 +23,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-gpbu&eyy6pmimg5_poa+j+ieq(vv*c+^le5#p%k*hs8e5+il%e'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+import os
+import dj_database_url
+from decouple import config
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+DEBUG = config('DEBUG', default=False, cast=bool)
+
+
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '.onrender.com']
 
 
 # Application definition
