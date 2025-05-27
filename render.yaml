@@ -2,7 +2,7 @@ services:
   - type: web
     name: attendance-app
     env: python
-    buildCommand: "./manage.py collectstatic --noinput"
+    buildCommand: "pip install -r requirements.txt"
     startCommand: "gunicorn attendance_system.wsgi:application"
     envVars:
       - key: SECRET_KEY
